@@ -1,0 +1,42 @@
+/*class Node
+    {
+        int data;
+        Node next;
+        Node(int d) {data = d; next = null; }
+    }*/
+
+// sortedInsert method should return the head of the modified linked list.
+class Solution {
+    Node sortedInsert(Node head, int key) {
+        // Add your code here.
+        boolean check = false;
+        Node newNode = new Node(key);
+        if(head == null){
+            head = newNode;
+            check = true;
+        }
+        else if(head.data > newNode.data){
+            newNode.next = head;
+            head = newNode;
+            check = true;
+        }else{
+            Node prev = head;
+            Node temp = head;
+            while(temp.next != null){
+                prev = temp;
+                temp = temp.next;
+                if(temp.data > newNode.data){
+                    prev.next = newNode;
+                    newNode.next = temp;
+                    check = true;
+                    break;
+                }
+            }
+            if(check == false){
+                temp.next = newNode;
+            }
+        }
+        return head;
+        
+    }
+}
