@@ -1,0 +1,43 @@
+/*class Node
+{
+    int data;
+    Node right, left;
+    Node(int item)
+    {
+        data = item;
+        left = right = null;
+    }
+}*/
+
+class GfG
+{
+    //store the sorted order value of bst
+    void inorder(Node root, ArrayList<Integer>list){
+        if(root==null){
+            return;
+        }
+        inorder(root.left, list);   
+        list.add(root.data);
+        inorder(root.right, list);
+    }
+    //build balance Bst using inorder Arraylist
+    Node inorderToBst(int s, int e, ArrayList<Integer>list ){
+        //base case
+        if(s>e){
+            return null;
+        }
+        int mid=(s+e)/2; // calculate the root node index at inorder Arraylist
+        Node root=new Node(list.get(mid));   
+        root.left=inorderToBst(s,mid-1,list);
+        root.right=inorderToBst(mid+1,e,list);
+        
+        return root;
+    }
+    Node buildBalancedTree(Node root) 
+    {
+        //Add your code here.
+        ArrayList<Integer>list=new ArrayList<>();
+       inorder(root,list);
+       return inorderToBst(0,list.size()-1,list);
+    }
+}
