@@ -1,0 +1,19 @@
+//User function Template for Java
+class Solution{
+    static int count(int A,int B,int N){  
+        // code here
+        int res = 0;
+        int count[] = new int[B+1];
+        for(int i = 1; i <= B; i++){
+            for(int j = i; j <= B; j = j+i){
+                if(j % i == 0)
+                    count[j]++;
+            }
+        }
+        for(int i = A; i <= B; i++){
+            if(count[i] == N)
+                 res++;
+        }
+        return res;
+    }
+}
