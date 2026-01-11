@@ -1,0 +1,48 @@
+class Solution {
+  public:
+    string minWindow(string& s1, string& s2) {
+        int n = (int)s1.size();
+        int m = (int)s2.size();
+        if (m == 0) return "";
+        if(m > n) return "";
+        int bestLen = INT_MAX;
+        int bestStart = -1;
+        int r =  0;
+        
+        while(r < n){
+         // 1) Forward pass try to match s2 in order
+            int j = 0;
+            while (r < n) {
+                if (s1[r] == s2[j]) {
+                    j++;
+                    if (j == m) break; // matched all of s2
+                }
+                r++;
+            }
+            if (j < m) break; // no more complete matches possible
+
+            // 2) Backward pass: shrink to the minimal window ending at r
+            int end = r;       // current window end
+            int start = r;     // we will move start left
+            j = m - 1;
+            while (start >= 0) {
+                if (s1[start] == s2[j]) {
+                    j--;
+                    if (j < 0) break; // found the minimal start that still contains s2
+                }
+                start--;
+            }
+
+            // Now window is [start, end]
+            if (start >= 0 && end - start + 1 < bestLen) {
+                bestLen = end - start + 1;
+                bestStart = start;
+            }
+
+            // 3) Continue search: move r to start+1 (look for next window)
+            r = start + 1;
+        }
+
+        return (bestStart == -1) ? "" : s1.substr(bestStart, bestLen);
+    }
+};
