@@ -1,0 +1,33 @@
+class Solution {
+  public:
+    bool canServe(vector<int> &arr) {
+        int fv = 0, tn = 0;
+        
+        for(int bill : arr){
+            switch(bill){
+                case 5:
+                fv++;
+                break;
+                case 10:
+                if(fv == 0) return false;
+                fv--;
+                tn++;
+                break;
+                case 20:
+                  if(tn > 0 && fv > 0){
+                      tn--;
+                      fv--;
+                  }else if(fv >= 3){
+                      fv -= 3;
+                  }else {
+                      return false;
+                  }
+                  break;
+                default:
+                  return false;
+                
+            }
+        }
+        return true;
+    }
+};
