@@ -1,0 +1,34 @@
+class Solution {
+  public:
+    int kBitFlips(vector<int>& arr, int k) {
+    int n = arr.size();
+    int flip_count = 0;
+        
+    vector<int> flip_effect(n + 1, 0);
+    
+    for (int i = 0; i < n; ++i) {
+        if (i > 0) {
+            flip_effect[i] += flip_effect[i - 1];
+        }
+        
+        int current_bit = (arr[i] + flip_effect[i]) % 2; // 0 if no flip, 1 if flipped
+        
+        if (current_bit == 0) {
+            if (i + k > n) {
+                return -1;
+            }
+            
+            flip_count++;
+            
+            flip_effect[i]++;
+            
+            if (i + k < n) {
+                flip_effect[i + k]--;
+            }
+        }
+    }
+    
+    return flip_count;
+}
+
+};
